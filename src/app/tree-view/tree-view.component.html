@@ -1,0 +1,25 @@
+<ul *ngIf="tree" class="tree">
+  <li *ngFor="let node of tree; let i = index">
+    <div class="label-container" (click)="toggleChild(node)">
+      <span *ngIf="node.children != 0">
+        <img
+          src="../../assets/next.png"
+          class="arrow-btn"
+          [ngClass]="node.isOpen ? 'open-btn' : 'close-btn'"
+        />
+      </span>
+      <span
+        class="node-item"
+        (click)="applyStyle(node)"
+        [ngClass]="node.active ? 'node-active' : ''"
+      >
+        {{ node.name }}
+      </span>
+    </div>
+    <app-tree-view
+      *ngIf="node.showChildren"
+      (selectedValue)="emitOnChildClicked($event)"
+      [tree]="node.children"
+    ></app-tree-view>
+  </li>
+</ul>
